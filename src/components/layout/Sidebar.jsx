@@ -18,15 +18,14 @@ import {
   ArrowLeft,
   User
 } from "lucide-react"
-import Login from "../../pages/auth/Login"
-import { ExitStatus } from "typescript"
+
 
 const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
   const location = useLocation()
 
   // Role-based sidebar links
   const sidebarLinks = {
-    doctor: [
+    DOCTOR: [
       { name: "Dashboard", path: "/doctor/dashboard", icon: <Home size={20} /> },
       { name: "Upcoming Appointments", path: "/doctor/appointments", icon: <Calendar size={20} /> },
       { name: "Patient List", path: "/doctor/patients", icon: <Users size={20} /> },
@@ -38,7 +37,7 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
 
     ],
-    patient: [
+    PATIENT: [
       { name: "Dashboard", path: "/patient/dashboard", icon: <Home size={20} /> },
       { name: "Book Appointment", path: "/patient/book-appointment", icon: <Calendar size={20} /> },
       { name: "Upcoming Appointments", path: "/patient/appointments", icon: <Calendar size={20} /> },
@@ -47,8 +46,10 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "Billing", path: "/patient/billing", icon: <CreditCard size={20} /> },
       { name: "Prescriptions", path: "/patient/prescriptions", icon: <ClipboardList size={20} /> },
       { name: "Messages", path: "/patient/messages", icon: <MessageSquare size={20} /> },
+      { name: "My-Profile", path: "/patient/profile", icon: <User size={20} /> },
+      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
     ],
-    admin: [
+    ADMIN: [
       { name: "Dashboard", path: "/admin/dashboard", icon: <Home size={20} /> },
       { name: "Doctor Approvals", path: "/admin/doctor-approvals", icon: <CheckSquare size={20} /> },
       { name: "Departments", path: "/admin/departments", icon: <Building2 size={20} /> },
@@ -56,6 +57,7 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "View Doctors", path: "/admin/doctors", icon: <Stethoscope size={20} /> },
       { name: "View Patients", path: "/admin/patients", icon: <Users size={20} /> },
       { name: "Statistics", path: "/admin/statistics", icon: <Activity size={20} /> },
+      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
     ],
   }
 
@@ -102,7 +104,9 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
 
         <nav className="mt-4 px-2 overflow-y-auto h-[calc(100vh-4rem)]">
           <ul className="space-y-1">
+          
             {sidebarLinks[role]?.map((item) => (
+              
               <li key={item.path}>
                 <Link
                   to={item.path}

@@ -70,61 +70,44 @@ const DoctorDashboard = () => {
           <h1 className="text-2xl font-bold text-gray-800">Doctor Dashboard</h1>
           <p className="text-gray-600">Welcome back, Dr. {doctor?.name}</p>
         </div>
-        <div className="mt-4 md:mt-0">
-          <Button variant="outline" className="mr-2" onClick={() => {}}>
-            Download Templates
-          </Button>
+        
           <Button variant="primary" onClick={() => {}}>
             View Calendar
           </Button>
-        </div>
       </div>
 
       {/* Dashboard Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-blue-50 border-none">
+        <Card title="Today's Appointments" className="bg-blue-50 border-none">
           <div className="flex items-start">
             <div className="p-3 bg-blue-100 rounded-full">
               <Calendar size={24} className="text-blue-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Today's Appointments
-              </h3>
-              <p className="text-3xl font-bold text-blue-600">
-                {upcomingAppointments.length}
-              </p>
-              <p className="text-sm text-gray-600">
-                Next: {upcomingAppointments[0]?.time}
-              </p>
+              <p className="text-3xl font-bold text-blue-600">{upcomingAppointments.length}</p>
+              <p className="text-sm text-gray-600">Next: {upcomingAppointments[0]?.time}</p>
             </div>
           </div>
         </Card>
 
-        <Card className="bg-green-50 border-none">
+        <Card title="Total Patients" className="bg-green-50 border-none">
           <div className="flex items-start">
             <div className="p-3 bg-green-100 rounded-full">
               <Users size={24} className="text-green-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Total Patients
-              </h3>
               <p className="text-3xl font-bold text-green-600">124</p>
               <p className="text-sm text-gray-600">4 new this week</p>
             </div>
           </div>
         </Card>
 
-        <Card className="bg-purple-50 border-none">
+        <Card title="Medical Records" className="bg-purple-50 border-none">
           <div className="flex items-start">
             <div className="p-3 bg-purple-100 rounded-full">
               <FileText size={24} className="text-purple-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Medical Records
-              </h3>
               <p className="text-3xl font-bold text-purple-600">37</p>
               <p className="text-sm text-gray-600">Last updated yesterday</p>
             </div>
@@ -158,17 +141,11 @@ const DoctorDashboard = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {upcomingAppointments.map(appointment => (
                 <tr key={appointment.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-medium text-gray-900">
-                      {appointment.patientName}
-                    </div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{appointment.patientName}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <Calendar size={16} className="text-gray-400 mr-2" />
-                      <span>
-                        {new Date(appointment.date).toLocaleDateString()}
-                      </span>
+                      <span>{new Date(appointment.date).toLocaleDateString()}</span>
                       <Clock size={16} className="text-gray-400 ml-4 mr-2" />
                       <span>{appointment.time}</span>
                     </div>
@@ -176,9 +153,7 @@ const DoctorDashboard = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        appointment.type === "online"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-green-100 text-green-800"
+                        appointment.type === "online" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"
                       }`}
                     >
                       {appointment.type === "online" ? "Online" : "In-Person"}
@@ -186,9 +161,7 @@ const DoctorDashboard = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                      {appointment.status === "scheduled"
-                        ? "Scheduled"
-                        : "Completed"}
+                      {appointment.status === "scheduled" ? "Scheduled" : "Completed"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -242,24 +215,14 @@ const DoctorDashboard = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {recentPatients.map(patient => (
                 <tr key={patient.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">{patient.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-medium text-gray-900">
-                      {patient.name}
-                    </div>
+                    {patient.gender}, {patient.age}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-500">
-                      {patient.gender}, {patient.age}
-                    </div>
+                    {new Date(patient.lastVisit).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-500">
-                      {new Date(patient.lastVisit).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-500">{patient.condition}</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{patient.condition}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <div className="flex space-x-2">
                       <button className="text-blue-600 hover:text-blue-900">

@@ -18,37 +18,14 @@ import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register"
 
 // Doctor Pages
-import DoctorDashboard from "./pages/doctor/DoctorDashboard"
 import ApprovalPending from "./pages/doctor/ApprovalPending"
 
 // Patient Pages
 import PatientDashboard from "./pages/patient/PatientDashboard"
-
+import DoctorDashboard from "./pages/doctor/DoctorDashboard"
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard"
-
-// Protected route component
-const ProtectedRoute = ({ element, allowedRoles, redirectPath = "/login" }) => {
-  const { isAuthenticated, user } = useAuthStore()
-
-  if (!isAuthenticated) {
-    return <Navigate to={redirectPath} replace />
-  }
-
-  if (user && !allowedRoles.includes(user.role)) {
-    // Redirect to appropriate dashboard based on role
-    if (user.role === "doctor") {
-      return <Navigate to="/doctor/dashboard" replace />
-    } else if (user.role === "patient") {
-      return <Navigate to="/patient/dashboard" replace />
-    } else if (user.role === "admin") {
-      return <Navigate to="/admin/dashboard" replace />
-    }
-    return <Navigate to="/" replace />
-  }
-
-  return <>{element}</>
-}
+import ProtectedRoute from "./components/auth/ProtectedRoute"
 
 function App() {
   return (
@@ -72,7 +49,7 @@ function App() {
             />
           }
         >
-          <Route path="dashboard" element={<DoctorDashboard />} />
+          <Route path="dashboard" element={< DoctorDashboard />} />
           <Route path="appointments" element={<div>Appointments</div>} />
           <Route path="patients" element={<div>Patients</div>} />
           <Route

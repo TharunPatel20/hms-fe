@@ -15,122 +15,51 @@ import {
   CheckSquare,
   X,
   Menu,
-  ArrowLeft
+  ArrowLeft,
+  User
 } from "lucide-react"
+import Login from "../../pages/auth/Login"
+import { ExitStatus } from "typescript"
 
 const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
   const location = useLocation()
 
-  const doctorLinks = [
-    { name: "Dashboard", path: "/doctor/dashboard", icon: <Home size={20} /> },
-    {
-      name: "Upcoming Appointments",
-      path: "/doctor/appointments",
-      icon: <Calendar size={20} />
-    },
-    {
-      name: "Patient List",
-      path: "/doctor/patients",
-      icon: <Users size={20} />
-    },
-    {
-      name: "Past Appointments",
-      path: "/doctor/past-appointments",
-      icon: <ClipboardList size={20} />
-    },
-    {
-      name: "Medical Records",
-      path: "/doctor/medical-records",
-      icon: <FileText size={20} />
-    },
-    {
-      name: "Appointment Calendar",
-      path: "/doctor/calendar",
-      icon: <Calendar size={20} />
-    },
-    {
-      name: "Messages",
-      path: "/doctor/messages",
-      icon: <MessageSquare size={20} />
-    }
-  ]
-
-  const patientLinks = [
-    { name: "Dashboard", path: "/patient/dashboard", icon: <Home size={20} /> },
-    {
-      name: "Book Appointment",
-      path: "/patient/book-appointment",
-      icon: <Calendar size={20} />
-    },
-    {
-      name: "Upcoming Appointments",
-      path: "/patient/appointments",
-      icon: <Calendar size={20} />
-    },
-    {
-      name: "Past Appointments",
-      path: "/patient/past-appointments",
-      icon: <ClipboardList size={20} />
-    },
-    {
-      name: "Medical Records",
-      path: "/patient/medical-records",
-      icon: <FileText size={20} />
-    },
-    {
-      name: "Billing",
-      path: "/patient/billing",
-      icon: <CreditCard size={20} />
-    },
-    {
-      name: "Prescriptions",
-      path: "/patient/prescriptions",
-      icon: <ClipboardList size={20} />
-    },
-    {
-      name: "Messages",
-      path: "/patient/messages",
-      icon: <MessageSquare size={20} />
-    }
-  ]
-
-  const adminLinks = [
-    { name: "Dashboard", path: "/admin/dashboard", icon: <Home size={20} /> },
-    {
-      name: "Doctor Approvals",
-      path: "/admin/doctor-approvals",
-      icon: <CheckSquare size={20} />
-    },
-    {
-      name: "Departments",
-      path: "/admin/departments",
-      icon: <Building2 size={20} />
-    },
-    { name: "Rooms", path: "/admin/rooms", icon: <DoorClosed size={20} /> },
-    {
-      name: "View Doctors",
-      path: "/admin/doctors",
-      icon: <Stethoscope size={20} />
-    },
-    {
-      name: "View Patients",
-      path: "/admin/patients",
-      icon: <Users size={20} />
-    },
-    {
-      name: "Statistics",
-      path: "/admin/statistics",
-      icon: <Activity size={20} />
-    }
-  ]
-
+  // Role-based sidebar links
   const sidebarLinks = {
-    doctor: doctorLinks,
-    patient: patientLinks,
-    admin: adminLinks
-  }[role]
+    doctor: [
+      { name: "Dashboard", path: "/doctor/dashboard", icon: <Home size={20} /> },
+      { name: "Upcoming Appointments", path: "/doctor/appointments", icon: <Calendar size={20} /> },
+      { name: "Patient List", path: "/doctor/patients", icon: <Users size={20} /> },
+      { name: "Past Appointments", path: "/doctor/past-appointments", icon: <ClipboardList size={20} /> },
+      { name: "Medical Records", path: "/doctor/medical-records", icon: <FileText size={20} /> },
+      { name: "Appointment Calendar", path: "/doctor/calendar", icon: <Calendar size={20} /> },
+      { name: "Messages", path: "/doctor/messages", icon: <MessageSquare size={20} /> },
+      { name: "My-Profile", path: "/doctor/profile", icon: <User size={20} /> },
+      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
 
-  const isActive = path => location.pathname === path
+    ],
+    patient: [
+      { name: "Dashboard", path: "/patient/dashboard", icon: <Home size={20} /> },
+      { name: "Book Appointment", path: "/patient/book-appointment", icon: <Calendar size={20} /> },
+      { name: "Upcoming Appointments", path: "/patient/appointments", icon: <Calendar size={20} /> },
+      { name: "Past Appointments", path: "/patient/past-appointments", icon: <ClipboardList size={20} /> },
+      { name: "Medical Records", path: "/patient/medical-records", icon: <FileText size={20} /> },
+      { name: "Billing", path: "/patient/billing", icon: <CreditCard size={20} /> },
+      { name: "Prescriptions", path: "/patient/prescriptions", icon: <ClipboardList size={20} /> },
+      { name: "Messages", path: "/patient/messages", icon: <MessageSquare size={20} /> },
+    ],
+    admin: [
+      { name: "Dashboard", path: "/admin/dashboard", icon: <Home size={20} /> },
+      { name: "Doctor Approvals", path: "/admin/doctor-approvals", icon: <CheckSquare size={20} /> },
+      { name: "Departments", path: "/admin/departments", icon: <Building2 size={20} /> },
+      { name: "Rooms", path: "/admin/rooms", icon: <DoorClosed size={20} /> },
+      { name: "View Doctors", path: "/admin/doctors", icon: <Stethoscope size={20} /> },
+      { name: "View Patients", path: "/admin/patients", icon: <Users size={20} /> },
+      { name: "Statistics", path: "/admin/statistics", icon: <Activity size={20} /> },
+    ],
+  }
+
+  const isActive = (path) => location.pathname === path
 
   return (
     <>
@@ -170,9 +99,10 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
             <ArrowLeft size={20} />
           </button>
         </div>
+
         <nav className="mt-4 px-2 overflow-y-auto h-[calc(100vh-4rem)]">
           <ul className="space-y-1">
-            {sidebarLinks.map(item => (
+            {sidebarLinks[role]?.map((item) => (
               <li key={item.path}>
                 <Link
                   to={item.path}

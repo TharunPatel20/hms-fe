@@ -35,7 +35,7 @@ const HomePage = () => {
               }}
             ></div>
 
-            <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center">
+            <div className="container mx-auto px-8 relative mt-6 z-10 flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 text-center md:text-left text-white">
                 <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
                   Modern Healthcare <br />
@@ -71,14 +71,14 @@ const HomePage = () => {
                 <img
                   src="https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750"
                   alt="Doctor with patient"
-                  className="rounded-lg shadow-2xl object-cover transform -rotate-3 hover:rotate-0 transition-transform duration-500 max-h-96"
+                  className="rounded-lg shadow-2xl object-cover transform rotate-0 hover:-rotate-3 transition-transform duration-500 max-h-96"
                 />
               </div>
             </div>
           </div>
 
           {/* Feature Cards */}
-          <div className="container mx-auto px-6 relative -mt-24 z-20">
+          <div className="container mx-auto px-6 relative -mt-8 z-20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
                 <div className="p-3 bg-blue-100 rounded-full inline-block mb-4">

@@ -1,28 +1,35 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { X, User, UserCheck, Users } from "lucide-react"
-import Button from "../common/Button"
-import LoginForm from "../forms/LoginForm"
+import React, { useState } from "react";
+import { X, User, UserCheck, Users } from "lucide-react";
+import Button from "../common/Button";
+import LoginForm from "../forms/LoginForm";
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 
 const LoginModal = ({ isOpen, onClose }) => {
-  const [selectedRole, setSelectedRole] = useState(null)
-  const navigate = useNavigate()
+  const [selectedRole, setSelectedRole] = useState(null);
+  const navigate = useNavigate(); // <-- Initialize navigate here
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
-  const handleRoleSelection = role => {
-    setSelectedRole(role)
-  }
+  const handleRoleSelection = (role) => {
+    setSelectedRole(role);
+  };
 
-  const handleRegister = role => {
-    onClose()
-    navigate(`/register/${role}`)
-  }
+  const handleRegister = (role) => {
+    onClose();
+    navigate(`/register/${role}`);
+  };
 
   const handleSuccess = () => {
-    onClose()
-    navigate(`/${selectedRole}/dashboard`)
-  }
+    // Navigate to the user's dashboard after a successful login
+    if (selectedRole) {
+      navigate(`/${selectedRole}/dashboard`);
+    }
+    onClose();
+  };
+
+  const handleBack = () => {
+    setSelectedRole(null); // Go back to role selection screen
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -105,12 +112,16 @@ const LoginModal = ({ isOpen, onClose }) => {
               </div>
             </div>
           ) : (
-            <LoginForm role={selectedRole} onSuccess={handleSuccess} />
+            <LoginForm
+              role={selectedRole}
+              onSuccess={handleSuccess}
+              onBack={handleBack} // Pass the back handler
+            />
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginModal
+export default LoginModal;

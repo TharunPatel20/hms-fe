@@ -8,12 +8,12 @@ import Button from "../common/Button";
 import { useAuthStore } from "../../store/authStore";
 
 const endpointMap = {
-  doctor: "/api/login/doctor",
-  patient: "/api/patient/login",
-  admin: "/api/login/admin",
+  doctor: "/api/hms/login/doctor",
+  patient: "/api/hms/patient/login",
+  admin: "/api/hms/login/admin",
 };
 
-const LoginForm = ({ role, onSuccess }) => {
+const LoginForm = ({ role, onSuccess, onBack }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -35,23 +35,17 @@ const LoginForm = ({ role, onSuccess }) => {
 
       try {
         const endpoint = endpointMap[role];
-        console.log("login process started " + role);
+        const response = await axios.post(`http://localhost:6969${endpoint}`, values);
+        console.log(response.data.data.body); 
+        localStorage.setItem("role", role);
+        localStorage.setItem("token", response.data.data.body.token); // Assuming token is returned
 
-        const response = await axios.post(
-          `http://localhost:8090${endpoint}`,
-          values
-        );
-
+        // Update global store or use context
         login(role, response.data);
-
-        if (onSuccess) {
-          onSuccess();
-        } else {
-          navigate(`/${role}/dashboard`);
-        }
+        navigate(`/${role}/dashboard`);
       } catch (err) {
         console.error("Login failed:", err);
-        setError("Invalid credentials or server error.");
+        setError("Login Failed, Invalid credentials");
       }
     },
   });
@@ -125,6 +119,13 @@ const LoginForm = ({ role, onSuccess }) => {
           icon={<LogIn size={16} />}
         >
           Login
+        </Button>
+      </div>
+
+      {/* Back button to role selection screen */}
+      <div className="mt-4">
+        <Button onClick={onBack} variant="outline" fullWidth>
+          Back to Role Selection
         </Button>
       </div>
     </form>

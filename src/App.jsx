@@ -52,6 +52,8 @@ function App() {
             <Route path="medical-records" element={<div>Medical Records</div>} />
             <Route path="calendar" element={<div>Calendar</div>} />
             <Route path="messages" element={<div>Messages</div>} />
+            <Route path="profile" element={<div>Profile</div>} />
+            <Route path="logout" element={<HomePage/>} />
             <Route index element={<Navigate to="dashboard" replace />} />
           </Route>
         </Route>
@@ -70,6 +72,8 @@ function App() {
             <Route path="billing" element={<div>Billing</div>} />
             <Route path="prescriptions" element={<div>Prescriptions</div>} />
             <Route path="messages" element={<div>Messages</div>} />
+            <Route path="profile" element={<div>Profile</div>} />
+            <Route path="logout" element={<HomePage/>} />
             <Route index element={<Navigate to="dashboard" replace />} />
           </Route>
         </Route>

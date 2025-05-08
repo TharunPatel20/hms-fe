@@ -10,11 +10,11 @@ const UserNavbar = () => {
 
   const getDashboardLink = () => {
     switch (user?.role) {
-      case "doctor":
+      case "DOCTOR":
         return "/doctor/dashboard";
-      case "patient":
+      case "PATIENT":
         return "/patient/dashboard";
-      case "admin":
+      case "ADMIN":
         return "/admin/dashboard";
       default:
         return "/";
@@ -28,10 +28,6 @@ const UserNavbar = () => {
 
   return (
     <div className="flex items-center gap-6">
-      <Link to="/" className="text-gray-600 hover:text-blue-600">Home</Link>
-      <Link to="/blogs" className="text-gray-600 hover:text-blue-600">Blogs</Link>
-      <Link to="/appointment" className="text-gray-600 hover:text-blue-600">Add Appointment</Link>
-
       <div className="relative">
         <button
           onClick={() => setProfileOpen(!profileOpen)}

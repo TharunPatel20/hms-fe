@@ -9,7 +9,7 @@ import { useAuthStore } from "../../store/authStore";
 
 const endpointMap = {
   doctor: "/api/hms/login/doctor",
-  patient: "/api/hms/patient/login",
+  patient: "/api/patient/login",
   admin: "/api/hms/login/admin",
 };
 
@@ -36,9 +36,9 @@ const LoginForm = ({ role, onSuccess, onBack }) => {
       try {
         const endpoint = endpointMap[role];
         const response = await axios.post(`http://localhost:6969${endpoint}`, values);
-        console.log(response.data.data.body); 
+        console.log(response.data.data); 
         localStorage.setItem("role", role);
-        localStorage.setItem("token", response.data.data.body.token); // Assuming token is returned
+        localStorage.setItem("token", response.data.data.token); // Assuming token is returned
 
         // Update global store or use context
         login(role, response.data);

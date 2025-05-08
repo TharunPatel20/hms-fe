@@ -1,24 +1,20 @@
-import React from "react"
-import { useParams } from "react-router-dom"
-import DoctorRegistrationForm from "../forms/DoctorRegistrationForm"
-import PatientRegistrationForm from "../forms/PatientRegistrationForm"
+import React from "react";
+import { useParams } from "react-router-dom";
+import DoctorRegistrationForm from "../forms/DoctorRegistrationForm";
+import PatientRegistrationForm from "../forms/PatientRegistrationForm";
 
 const RegisterForm = ({ role }) => {
-  // fallback if role is not passed as prop
-  const { userType } = useParams()
-  const currentRole = role || userType
+  const { role: routeRole } = useParams();
+  const currentRole = role || routeRole;
 
-  if (currentRole === "doctor") {
-    return <DoctorRegistrationForm />
-  } else if (currentRole === "patient") {
-    return <PatientRegistrationForm />
-  } else {
-    return (
-      <div className="text-center text-red-600 font-semibold">
-        Invalid user type.
-      </div>
-    )
+  switch (currentRole) {
+    case "doctor":
+      return <DoctorRegistrationForm />;
+    case "patient":
+      return <PatientRegistrationForm />;
+    default:
+      return <div className="text-red-600 text-center font-semibold">Invalid user type.</div>;
   }
-}
+};
 
-export default RegisterForm
+export default RegisterForm;

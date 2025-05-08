@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { X, User, UserCheck, Users } from "lucide-react";
 import Button from "../common/Button";
 import LoginForm from "../forms/LoginForm";
-import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [selectedRole, setSelectedRole] = useState(null);
-  const navigate = useNavigate(); // <-- Initialize navigate here
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -20,7 +20,6 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
 
   const handleSuccess = () => {
-    // Navigate to the user's dashboard after a successful login
     if (selectedRole) {
       navigate(`/${selectedRole}/dashboard`);
     }
@@ -28,7 +27,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
 
   const handleBack = () => {
-    setSelectedRole(null); // Go back to role selection screen
+    setSelectedRole(null);
   };
 
   return (
@@ -115,7 +114,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             <LoginForm
               role={selectedRole}
               onSuccess={handleSuccess}
-              onBack={handleBack} // Pass the back handler
+              onBack={handleBack}
             />
           )}
         </div>

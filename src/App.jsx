@@ -1,31 +1,31 @@
-import React from "react"
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate
-} from "react-router-dom"
-import { useAuthStore } from "./store/authStore"
+} from "react-router-dom";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Layouts
-import DashboardLayout from "./components/layout/DashboardLayout"
+import DashboardLayout from "./components/layout/DashboardLayout";
 
 // Public Pages
-import HomePage from "./pages/public/HomePage"
-import AppointmentPage from "./pages/public/AppointmentPage"
-import BlogsPage from "./pages/public/BlogsPage"
-import Login from "./pages/auth/Login"
-import Register from "./pages/auth/Register"
+import HomePage from "./pages/public/HomePage";
+import AppointmentPage from "./pages/public/AppointmentPage";
+import BlogsPage from "./pages/public/BlogsPage";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 // Doctor Pages
-import ApprovalPending from "./pages/doctor/ApprovalPending"
+import ApprovalPending from "./pages/doctor/ApprovalPending";
+import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 
 // Patient Pages
-import PatientDashboard from "./pages/patient/PatientDashboard"
-import DoctorDashboard from "./pages/doctor/DoctorDashboard"
+import PatientDashboard from "./pages/patient/PatientDashboard";
+
 // Admin Pages
-import AdminDashboard from "./pages/admin/AdminDashboard"
-import ProtectedRoute from "./components/auth/ProtectedRoute"
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   return (
@@ -42,81 +42,60 @@ function App() {
         <Route path="/doctor/approval-pending" element={<ApprovalPending />} />
         <Route
           path="/doctor"
-          element={
-            <ProtectedRoute
-              element={<DashboardLayout />}
-              allowedRoles={["doctor"]}
-            />
-          }
+          element={<ProtectedRoute allowedRoles={["doctor"]} />}
         >
-          <Route path="dashboard" element={< DoctorDashboard />} />
-          <Route path="appointments" element={<div>Appointments</div>} />
-          <Route path="patients" element={<div>Patients</div>} />
-          <Route
-            path="past-appointments"
-            element={<div>Past Appointments</div>}
-          />
-          <Route path="medical-records" element={<div>Medical Records</div>} />
-          <Route path="calendar" element={<div>Calendar</div>} />
-          <Route path="messages" element={<div>Messages</div>} />
-          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="dashboard" element={<DoctorDashboard />} />
+            <Route path="appointments" element={<div>Appointments</div>} />
+            <Route path="patients" element={<div>Patients</div>} />
+            <Route path="past-appointments" element={<div>Past Appointments</div>} />
+            <Route path="medical-records" element={<div>Medical Records</div>} />
+            <Route path="calendar" element={<div>Calendar</div>} />
+            <Route path="messages" element={<div>Messages</div>} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+          </Route>
         </Route>
 
         {/* Patient Routes */}
         <Route
           path="/patient"
-          element={
-            <ProtectedRoute
-              element={<DashboardLayout />}
-              allowedRoles={["patient"]}
-            />
-          }
+          element={<ProtectedRoute allowedRoles={["patient"]} />}
         >
-          <Route path="dashboard" element={<PatientDashboard />} />
-          <Route
-            path="book-appointment"
-            element={<div>Book Appointment</div>}
-          />
-          <Route path="appointments" element={<div>Appointments</div>} />
-          <Route
-            path="past-appointments"
-            element={<div>Past Appointments</div>}
-          />
-          <Route path="medical-records" element={<div>Medical Records</div>} />
-          <Route path="billing" element={<div>Billing</div>} />
-          <Route path="prescriptions" element={<div>Prescriptions</div>} />
-          <Route path="messages" element={<div>Messages</div>} />
-          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="dashboard" element={<PatientDashboard />} />
+            <Route path="book-appointment" element={<div>Book Appointment</div>} />
+            <Route path="appointments" element={<div>Appointments</div>} />
+            <Route path="past-appointments" element={<div>Past Appointments</div>} />
+            <Route path="medical-records" element={<div>Medical Records</div>} />
+            <Route path="billing" element={<div>Billing</div>} />
+            <Route path="prescriptions" element={<div>Prescriptions</div>} />
+            <Route path="messages" element={<div>Messages</div>} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+          </Route>
         </Route>
 
         {/* Admin Routes */}
         <Route
           path="/admin"
-          element={
-            <ProtectedRoute
-              element={<DashboardLayout />}
-              allowedRoles={["admin"]}
-            />
-          }
+          element={<ProtectedRoute allowedRoles={["admin"]} />}
         >
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route
-            path="doctor-approvals"
-            element={<div>Doctor Approvals</div>}
-          />
-          <Route path="departments" element={<div>Departments</div>} />
-          <Route path="rooms" element={<div>Rooms</div>} />
-          <Route path="doctors" element={<div>Doctors</div>} />
-          <Route path="patients" element={<div>Patients</div>} />
-          <Route path="statistics" element={<div>Statistics</div>} />
-          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="doctor-approvals" element={<div>Doctor Approvals</div>} />
+            <Route path="departments" element={<div>Departments</div>} />
+            <Route path="rooms" element={<div>Rooms</div>} />
+            <Route path="doctors" element={<div>Doctors</div>} />
+            <Route path="patients" element={<div>Patients</div>} />
+            <Route path="statistics" element={<div>Statistics</div>} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+          </Route>
         </Route>
 
-        {/* Catch all - redirect to home */}
+        {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

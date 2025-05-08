@@ -1,23 +1,16 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Navbar from "../../components/layout/Navbar"
-import LoginModal from "../../components/auth/LoginModal"
+import React, { useState } from "react";
+import Navbar from "../../components/layout/Navbar";
+import LoginModal from "../../components/auth/LoginModal";
 
 const Login = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(true)
-  const navigate = useNavigate()
-
-  const handleCloseModal = () => {
-    setIsLoginModalOpen(false)
-    navigate("/")
-  }
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseModal} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

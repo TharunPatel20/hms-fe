@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../../components/layout/Navbar";
 import {
   CheckCircle,
   X,
@@ -42,6 +43,7 @@ const pendingDoctorApprovals = [
 const AdminDashboard = () => {
   const { user } = useAuthStore();
   const admin = user;
+  console.log("Admin user:", admin);
   return (
     <div className="space-y-6">
       {" "}

@@ -59,7 +59,7 @@ const PatientRegistrationForm = () => {
       try {
         await axios.post("http://localhost:6969/api/patient/register", {
           ...values,
-          mobileNo: `880${values.mobileNo}`,
+          mobileNo: `91${values.mobileNo}`,
         });
         navigate("/login");
       } catch (error) {

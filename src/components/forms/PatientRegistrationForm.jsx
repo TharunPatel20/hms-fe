@@ -1,13 +1,14 @@
 // import React from "react"
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import Button from "../common/Button"
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
+import { useState } from "react";
 
 const PatientRegistrationForm = () => {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const bloodGroups = [
     { label: "A+", value: "A_POSITIVE" },
     { label: "A-", value: "A_NEGATIVE" },
@@ -16,13 +17,13 @@ const PatientRegistrationForm = () => {
     { label: "AB+", value: "AB_POSITIVE" },
     { label: "AB-", value: "AB_NEGATIVE" },
     { label: "O+", value: "O_POSITIVE" },
-    { label: "O-", value: "O_NEGATIVE" }
-  ]
+    { label: "O-", value: "O_NEGATIVE" },
+  ];
 
   const genders = [
     { label: "Male", value: "MALE" },
-    { label: "Female", value: "FEMALE" }
-  ]
+    { label: "Female", value: "FEMALE" },
+  ];
 
   const formik = useFormik({
     initialValues: {
@@ -35,32 +36,43 @@ const PatientRegistrationForm = () => {
       dateOfBirth: "",
       bloodGroup: "",
       gender: "",
-      interestedInBloodDonate: false
+      interestedInBloodDonate: false,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
-      email: Yup.string().email("Invalid email format").required("Email is required"),
+      email: Yup.string()
+        .email("Invalid email format")
+        .required("Email is required"),
       password: Yup.string().required("Password is required"),
       imageUrl: Yup.string().required("Image URL is required"),
       address: Yup.string().required("Address is required"),
       mobileNo: Yup.string()
-        .matches(/^880\d{10}$/, "Mobile number must start with '880' and be followed by 10 digits")
+        .max(10, "Mobile number must be less than 10 digits")
+        .min(10, "Mobile number must be 10 digits")
         .required("Mobile number is required"),
       dateOfBirth: Yup.date().required("Date of birth is required"),
       bloodGroup: Yup.string().required("Blood group is required"),
       gender: Yup.string().required("Gender is required"),
-      interestedInBloodDonate: Yup.boolean()
+      interestedInBloodDonate: Yup.boolean(),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       try {
-        await axios.post("http://localhost:6969/api/patient/register", values)
-        navigate("/login")
+        await axios.post("http://localhost:6969/api/patient/register", {
+          ...values,
+          mobileNo: `880${values.mobileNo}`,
+        });
+        navigate("/login");
       } catch (error) {
-        console.error("Registration failed:", error)
-        alert("Patient registration failed. Please try again.")
+        console.error("Registration failed:", error);
+        // alert("Patient registration failed. Please try again.")
+        const message =
+          error.response?.data?.message ||
+          "Patient registration failed. Please try again.";
+        setError(message);
+        formik.setErrors({ submit: message });
       }
-    }
-  })
+    },
+  });
 
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-6">
@@ -72,10 +84,13 @@ const PatientRegistrationForm = () => {
           { label: "Image URL", name: "imageUrl", type: "text" },
           { label: "Mobile Number", name: "mobileNo", type: "text" },
           { label: "Address", name: "address", type: "text" },
-          { label: "Date of Birth", name: "dateOfBirth", type: "date" }
-        ].map(field => (
+          { label: "Date of Birth", name: "dateOfBirth", type: "date" },
+        ].map((field) => (
           <div key={field.name}>
-            <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor={field.name}
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               {field.label}
             </label>
             <input
@@ -92,14 +107,19 @@ const PatientRegistrationForm = () => {
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
             {formik.touched[field.name] && formik.errors[field.name] && (
-              <p className="text-sm text-red-600 mt-1">{formik.errors[field.name]}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {formik.errors[field.name]}
+              </p>
             )}
           </div>
         ))}
 
         {/* Gender Dropdown */}
         <div>
-          <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="gender"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Gender
           </label>
           <select
@@ -115,7 +135,7 @@ const PatientRegistrationForm = () => {
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
             <option value="">Select Gender</option>
-            {genders.map(option => (
+            {genders.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -128,7 +148,10 @@ const PatientRegistrationForm = () => {
 
         {/* Blood Group Dropdown */}
         <div>
-          <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="bloodGroup"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Blood Group
           </label>
           <select
@@ -144,14 +167,16 @@ const PatientRegistrationForm = () => {
             } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
             <option value="">Select Blood Group</option>
-            {bloodGroups.map(option => (
+            {bloodGroups.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
           </select>
           {formik.touched.bloodGroup && formik.errors.bloodGroup && (
-            <p className="text-sm text-red-600 mt-1">{formik.errors.bloodGroup}</p>
+            <p className="text-sm text-red-600 mt-1">
+              {formik.errors.bloodGroup}
+            </p>
           )}
         </div>
 
@@ -165,7 +190,10 @@ const PatientRegistrationForm = () => {
             onChange={formik.handleChange}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label htmlFor="interestedInBloodDonate" className="ml-2 block text-sm text-gray-700">
+          <label
+            htmlFor="interestedInBloodDonate"
+            className="ml-2 block text-sm text-gray-700"
+          >
             Interested in Blood Donation
           </label>
         </div>
@@ -181,9 +209,13 @@ const PatientRegistrationForm = () => {
           Login here
         </button>
       </div>
-
+      {error && <p className="text-sm text-red-600 text-center">{error}</p>}
       <div className="flex items-center gap-4 justify-end">
-        <Button type="button" variant="outline" onClick={() => navigate("/login")}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => navigate("/login")}
+        >
           Cancel
         </Button>
         <Button type="submit" variant="primary" isLoading={formik.isSubmitting}>
@@ -191,7 +223,7 @@ const PatientRegistrationForm = () => {
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default PatientRegistrationForm
+export default PatientRegistrationForm;

@@ -26,13 +26,15 @@ import PatientDashboard from "./pages/patient/PatientDashboard";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import { useAuthStore } from "./store/authStore";
 
 function App() {
+  const {role} = useAuthStore();
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={role ? <Navigate to={`/${role}/dashboard`} replace /> : <HomePage />} />
         <Route path="/appointment" element={<AppointmentPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/login" element={<Login />} />
@@ -42,7 +44,7 @@ function App() {
         <Route path="/doctor/approval-pending" element={<ApprovalPending />} />
         <Route
           path="/doctor"
-          element={<ProtectedRoute allowedRoles={["doctor"]} />}
+          element={<ProtectedRoute allowedRoles={["DOCTOR"]} />}
         >
           <Route element={<DashboardLayout />}>
             <Route path="dashboard" element={<DoctorDashboard />} />
@@ -61,7 +63,7 @@ function App() {
         {/* Patient Routes */}
         <Route
           path="/patient"
-          element={<ProtectedRoute allowedRoles={["patient"]} />}
+          element={<ProtectedRoute allowedRoles={["PATIENT"]} />}
         >
           <Route element={<DashboardLayout />}>
             <Route path="dashboard" element={<PatientDashboard />} />
@@ -81,7 +83,7 @@ function App() {
         {/* Admin Routes */}
         <Route
           path="/admin"
-          element={<ProtectedRoute allowedRoles={["admin"]} />}
+          element={<ProtectedRoute allowedRoles={["ADMIN"]} />}
         >
           <Route element={<DashboardLayout />}>
             <Route path="dashboard" element={<AdminDashboard />} />
@@ -96,7 +98,7 @@ function App() {
         </Route>
 
         {/* Fallback Route */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to={role ?`/${role}/dashboard` :"/"} replace />} />
       </Routes>
     </Router>
   );

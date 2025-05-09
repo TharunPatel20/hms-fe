@@ -1,38 +1,39 @@
-import { create } from "zustand"
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-export const useAuthStore = create((set) => ({
-  user: null,
-  role: null,
-  token: null,
-  isAuthenticated: false,
-  isLoading: false,
-
-  login: (role, data) => {
-    const { token, ...user } = data
-
-    localStorage.setItem("token", token)
-    localStorage.setItem("role", role)
-    localStorage.setItem("user", JSON.stringify(user))
-
-    set({
-      user,
-      role,
-      token,
-      isAuthenticated: true,
-      isLoading: false,
-    })
-  },
-
-  logout: () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("role")
-    localStorage.removeItem("user")
-
-    set({
-      user: null,
-      role: null,
-      token: null,
+export const useAuthStore = create(
+  persist(
+    (set, get) => ({
+      user: '',
+      role: '',
+      token: '',
       isAuthenticated: false,
-    })
-  },
-}))
+      isLoading: false,
+
+      login: (role, data) => {
+        set({
+          user: data.userId,
+          role: data.role,
+          token: data.token,
+          isAuthenticated: true,
+          isLoading: false,
+        });
+      },
+
+      
+      logout: () => {
+
+        set({
+          user: null,
+          role: null,
+          token: null,
+          isAuthenticated: false,
+        });
+      }
+    }),
+    {
+      name: "ui-storage", // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+    }
+  )
+)

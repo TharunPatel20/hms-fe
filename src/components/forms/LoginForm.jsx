@@ -35,15 +35,20 @@ const LoginForm = ({ role, onSuccess, onBack }) => {
 
       try {
         const endpoint = endpointMap[role];
-        const response = await axios.post(`http://localhost:6969${endpoint}`, values);
-        console.log(response.data.data); 
-        localStorage.setItem("role", role);
-        localStorage.setItem("token", response.data.data.token); // Assuming token is returned
-
+        const response = await axios.post(
+          `http://localhost:6969${endpoint}`,
+          values
+        );
+        console.log(response.status);
+        // const token = response.data.data.token; // Assuming token is returned in the response
+        // localStorage.setItem( role);
+        // localStorage.setItem( token); // Assuming token is returned
 
         // Update global store or use context
-        login(role, response.data.data);
-        navigate(`/${role}/dashboard`);
+        if (response.status === 200) {
+          login(role, response.data.data);
+          navigate(`/${role}/dashboard`);
+        } else setError(response.data.data);
       } catch (err) {
         console.error("Login failed:", err);
         setError("Login Failed, Invalid credentials");

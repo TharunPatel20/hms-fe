@@ -1,13 +1,26 @@
-import React from "react"
-import { useFormik } from "formik"
+import React, { useState } from "react"
+import { ErrorMessage, useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Button from "../common/Button"
 
+const degrees = ["MBBS", "MD", "DO", "BDS", "MS"]
+const designations = [
+  "SENIOR_CONSULTANT",
+  "PROFESSOR",
+  "ASSOCIATE_PROFESSOR",
+  "JUNIOR_DOCTOR",
+  "RESIDENT",
+  "CHIEF_PHYSICIAN",
+  "MEDICAL_OFFICER",
+  "SURGEON",
+  "GENERAL_PRACTITIONER"
+]
+
 const DoctorRegistrationForm = () => {
   const navigate = useNavigate()
-
+  const [error, setError] = useState(null);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -34,21 +47,39 @@ const DoctorRegistrationForm = () => {
       designation: Yup.string().required("Designation is required"),
       specialization: Yup.string().required("Specialization is required"),
       yearOfExperience: Yup.number()
-        .min(0, "Min experience can't be less than 0")
-        .required("Year of Experience is required"),
-      startTime: Yup.string().required("Start Time is required"),
+        .min(0, "Minimum experience is 0")
+        .required("Experience is required"),
+      startTime: Yup.string().required("Start time is required"),
       noOfDailyPatient: Yup.number()
-        .min(1, "Minimum 1 patient is required")
-        .required("No of daily patient is required")
+        .min(1, "At least 1 patient per day")
+        .required("Number of daily patients is required")
     }),
     onSubmit: async values => {
       try {
-        await axios.post("http://localhost:8080/api/doctors/register", values)
-        navigate("/doctor/approval-pending")
-      } catch (error) {
-        console.error("Registration failed:", error)
-        alert("Doctor registration failed. Please try again.")
+        const payload = {
+          ...values,
+          startTime: `${values.startTime}:00`
+        }
+        console.log("Submitting form with values:", payload);
+        const response = await axios.post("http://localhost:6969/api/hms/register/doctor", payload)
+        console.log("response ", response);
+        if(response.status == 200) {
+          navigate("/doctor/approval-pending")
+          console.log("Registration successful:", response.data)
+        }
+        else{
+          // console.error("Registration failed:", response.data)
+          setError(response.data.message)
+          
+          formik.setErrors({ submit: response.data.message })
+        }
+      }  catch (error) {
+        console.error("Registration failed:", error);
+        const message = error.response?.data?.message || "Doctor registration failed. Please try again.";
+        setError(message);
+        formik.setErrors({ submit: message });
       }
+      
     }
   })
 
@@ -62,8 +93,6 @@ const DoctorRegistrationForm = () => {
           { label: "Image URL", name: "image", type: "text" },
           { label: "Department Name", name: "departmentName", type: "text" },
           { label: "Medical Name", name: "medicalName", type: "text" },
-          { label: "Degree", name: "degree", type: "text" },
-          { label: "Designation", name: "designation", type: "text" },
           { label: "Specialization", name: "specialization", type: "text" },
           {
             label: "Years of Experience",
@@ -104,8 +133,64 @@ const DoctorRegistrationForm = () => {
             )}
           </div>
         ))}
-      </div>
 
+        {/* Degree Dropdown */}
+        <div>
+          <label
+            htmlFor="degree"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Degree
+          </label>
+          <select
+            id="degree"
+            name="degree"
+            value={formik.values.degree}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Degree</option>
+            {degrees.map(degree => (
+              <option key={degree} value={degree}>
+                {degree}
+              </option>
+            ))}
+          </select>
+          {formik.touched.degree && formik.errors.degree && (
+            <p className="text-sm text-red-600 mt-1">{formik.errors.degree}</p>
+          )}
+        </div>
+
+        {/* Designation Dropdown */}
+        <div>
+          <label
+            htmlFor="designation"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Designation
+          </label>
+          <select
+            id="designation"
+            name="designation"
+            value={formik.values.designation}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Designation</option>
+            {designations.map(designation => (
+              <option key={designation} value={designation}>
+                {designation.replace("_", " ")}
+              </option>
+            ))}
+          </select>
+          {formik.touched.designation && formik.errors.designation && (
+            <p className="text-sm text-red-600 mt-1">{formik.errors.designation}</p>
+          )}
+        </div>
+      </div>
+      {error && <p className="text-sm text-red-600 text-center">{error}</p>}
       <div className="flex items-center gap-4 justify-end">
         <Button
           type="button"

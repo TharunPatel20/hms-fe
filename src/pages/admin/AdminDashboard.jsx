@@ -11,6 +11,7 @@ import {
 import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
+import AdminNavbar from "./AdminNavbar";
 
 // Mock data for demonstration
 const pendingDoctorApprovals = [
@@ -40,26 +41,12 @@ const pendingDoctorApprovals = [
   },
 ];
 const AdminDashboard = () => {
-  const { user } = useAuthStore();
-  const admin = user;
+  const { role } = useAuthStore();
+  const admin = role;
   return (
     <div className="space-y-6">
       {" "}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-        <div>
-        <Navbar />
-          {" "}
-          <h1 className="text-2xl font-bold text-gray-800">
-            Admin Dashboard
-          </h1>{" "}
-          <p className="text-gray-600">Welcome back, {admin?.name}</p>{" "}
-        </div>{" "}
-        <div className="mt-4 md:mt-0">
-          <Button variant="primary" onClick={() => {}}>
-            System Settings{" "}
-          </Button>{" "}
-        </div>{" "}
-      </div>
+      <AdminNavbar/>
       {/* Dashboard Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="bg-blue-50 border-none">

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
-import UserNavbar from "./UserNavbar";
 import PublicNavbar from "./PublicNavbar";
+import AdminNavbar from "../../pages/admin/AdminNavbar";
+import DoctorNavbar from "../../pages/doctor/DoctorNavbar";
+import PatientNavbar from "../../pages/patient/PatientNavbar";
 
 const Navbar = ({ transparent = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, role } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -15,9 +17,10 @@ const Navbar = ({ transparent = false }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navbarClass = transparent && !isScrolled
-    ? "bg-transparent text-white"
-    : "bg-white text-gray-800 border-b";
+  const navbarClass =
+    transparent && !isScrolled
+      ? "bg-transparent text-white"
+      : "bg-white text-gray-800 border-b";
 
   return (
     <nav className={`fixed w-full z-50 transition-all ${navbarClass}`}>
@@ -25,14 +28,21 @@ const Navbar = ({ transparent = false }) => {
         <span className="text-xl font-bold">MediCare</span>
 
         <div className="hidden sm:flex">
-          {isAuthenticated ? <UserNavbar /> : <PublicNavbar />}
+          {isAuthenticated ? (
+            role === "ADMIN" ? (
+              <AdminNavbar />
+            ) : role === "DOCTOR" ? (
+              <DoctorNavbar />
+            ) : (
+              <PatientNavbar />
+            )
+          ) : (
+            <PublicNavbar />
+          )}
         </div>
 
         {/* Mobile Toggle */}
-        <button
-          className="sm:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="sm:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>

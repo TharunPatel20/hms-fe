@@ -3,7 +3,7 @@ import { Calendar, Clock, CheckCircle, X, Users, FileText } from "lucide-react";
 import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
-import UserNavbar from "../../components/layout/UserNavbar";
+import DoctorNavbar from "./DoctorNavbar";
 
 // Mock data for demonstration
 const upcomingAppointments = [
@@ -61,29 +61,15 @@ const recentPatients = [
 ];
 
 const DoctorDashboard = () => {
-  const { user } = useAuthStore();
-  const doctor = user;
+  const { role } = useAuthStore();
+  const doctor = role;
 
   return (
     <>
       
       <div className="space-y-6">
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <div>
-            
-            <h1 className="text-2xl font-bold text-gray-800">
-              Doctor Dashboard
-            </h1>
-            
-            <p className="text-gray-600">Welcome back, Dr. {doctor?.name}</p>
-          </div>
-          <div className="flex gap-4">
-          <Button variant="primary" onClick={() => {}}>
-            View Calendar
-          </Button>
-          <UserNavbar /></div>
-        </div>
+       <DoctorNavbar/>
 
         {/* Dashboard Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

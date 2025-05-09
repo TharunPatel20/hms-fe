@@ -34,7 +34,6 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "Appointment Calendar", path: "/doctor/calendar", icon: <Calendar size={20} /> },
       { name: "Messages", path: "/doctor/messages", icon: <MessageSquare size={20} /> },
       { name: "My-Profile", path: "/doctor/profile", icon: <User size={20} /> },
-      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
 
     ],
     PATIENT: [
@@ -47,7 +46,6 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "Prescriptions", path: "/patient/prescriptions", icon: <ClipboardList size={20} /> },
       { name: "Messages", path: "/patient/messages", icon: <MessageSquare size={20} /> },
       { name: "My-Profile", path: "/patient/profile", icon: <User size={20} /> },
-      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
     ],
     ADMIN: [
       { name: "Dashboard", path: "/admin/dashboard", icon: <Home size={20} /> },
@@ -57,7 +55,6 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "View Doctors", path: "/admin/doctors", icon: <Stethoscope size={20} /> },
       { name: "View Patients", path: "/admin/patients", icon: <Users size={20} /> },
       { name: "Statistics", path: "/admin/statistics", icon: <Activity size={20} /> },
-      { name: "Sign-Out", path: "/", icon: <Home size={20} /> },
     ],
   }
 

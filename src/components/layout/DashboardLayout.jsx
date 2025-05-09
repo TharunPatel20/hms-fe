@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
-import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import { useAuthStore } from "../../store/authStore"
 
 const DashboardLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const { user, loading } = useAuthStore()  // Assuming there's a loading state for user
+  const { role, isLoading } = useAuthStore()  // Assuming there's a loading state for role
   const navigate = useNavigate()
 
-  // Redirect to login if no user is found
+  console.log('dashboard')
+  // Redirect to login if no role is found
   useEffect(() => {
-    if (!loading && !user) {
+    if (!isLoading && !role) {
       navigate("/login")
     }
-  }, [user, loading, navigate])
+  }, [role, isLoading, navigate])
 
-  if (loading) {
+  if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>  // Optional loading state
   }
 
-  if (!user) {
+  if (!role) {
+    console.error('no role')
     return null  // Optionally, you can return a redirect here if you want to handle it differently
   }
 
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
       
       <div className="flex flex-1">
         <Sidebar
-          role={user.role}
+          role={role}
           isMobileOpen={isMobileOpen}
           setIsMobileOpen={setIsMobileOpen}
         />

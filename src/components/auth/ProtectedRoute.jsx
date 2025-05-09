@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store/authStore";
 
 const ProtectedRoute = ({ allowedRoles, redirectPath = "/login" }) => {
   const { isAuthenticated, role } = useAuthStore();
+  console.log(isAuthenticated, role)
 
   if (!isAuthenticated || !role) {
     return <Navigate to={redirectPath[role]} replace />;
@@ -10,11 +11,11 @@ const ProtectedRoute = ({ allowedRoles, redirectPath = "/login" }) => {
 
   if (!allowedRoles.includes(role)) {
     const fallbackPaths = {
-      doctor: "/doctor/dashboard",
-      patient: "/patient/dashboard",
-      admin: "/admin/dashboard",
+      DOCTOR: "/doctor/dashboard",
+      PATIENT: "/patient/dashboard",
+      ADMIN: "/admin/dashboard",
     };
-    return <Navigate to={fallbackPaths[role] || "/"} replace />;
+    return <Navigate to={fallbackPaths[role] || `/${role}/dashboard`} replace />;
   }
 
   return <Outlet />;

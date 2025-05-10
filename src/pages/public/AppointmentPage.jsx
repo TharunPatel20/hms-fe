@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 import {
   Calendar,
   Clock,
@@ -20,15 +22,105 @@ const AppointmentPage = () => {
   const { isAuthenticated } = useAuthStore();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [appointmentType, setAppointmentType] = useState("in-person");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const [departments, setDepartments] = useState([]);
+const [doctors, setDoctors] = useState([]);
+const [availableSlots, setAvailableSlots] = useState([]);
+useEffect(() => {
+  const fetchDepartments = async () => {
+    try {
+      const res = await axios.get("http://localhost:6969/api/hms/admin/department/getAllDept");
+      setDepartments(res.data.data); // Adjust if your backend sends a different structure
+      console.log("Fetched departments:", departments);
 
-  const handleSubmit = (e) => {
+    } catch (err) {
+      console.error("Failed to fetch departments", err);
+    }
+  };
+
+  fetchDepartments();
+}, []);
+
+const handleDeptChange = async (e) => {
+  const selectedDepartment= e.target.value;
+  setSelectedDepartment(selectedDepartment);
+
+  try {
+    const res = await axios.get(
+      `http://localhost:6969/api/hms/doctor/department/${selectedDepartment}`
+    );
+    setDoctors(res.data.data);
+    console.log("Fetched doctors:", res.data.data);
+  } catch (err) {
+    console.error("Failed to fetch doctors", err);
+  }
+};
+
+useEffect(() => {
+  if (!selectedDepartment) return;
+
+  // const fetchDoctors = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:6969/api/hms/doctor/department/${selectedDepartment}`
+  //     );
+  //     setDoctors(res.data.data);
+  //     console.log("Fetched doctors:", response.data.data);
+  //   } catch (err) {
+  //     console.error("Failed to fetch doctors", err);
+  //   }
+  // };
+
+  // fetchDoctors();
+ 
+  handleDeptChange({ target: { value: selectedDepartment } });
+}, [selectedDepartment]);
+const token = useAuthStore((state) => state.token);
+// useEffect(() => {
+//   if (!selectedDoctor || !selectedDate) return;
+
+//   const fetchAvailableSlots = async () => {
+//     const token = useAuthStore((state) => state.token);
+//     try {
+//       const res = await axios.get(
+//         `http://localhost:6969/api/hms/appointments/available-slots?doctorId=${selectedDoctor}&date=${selectedDate}`, {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       setAvailableSlots(res.data);
+//     } catch (err) {
+//       console.error("Failed to fetch time slots", err);
+//     }
+//   };
+
+//   fetchAvailableSlots();
+// }, [selectedDoctor, selectedDate]);
+
+useEffect(() => {
+  if (!selectedDoctor || !selectedDate) return;
+  const fetchAvailableSlots = async () => {
+    const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+
+    try {
+      const response = await axios.get(
+        `http://localhost:6969/api/hms/appointment/doctor/${selectedDoctor}/freeSlot/${formattedDate}`
+      );
+      setAvailableSlots(response.data.data);
+    } catch (error) {
+      console.error('Failed to fetch time slots', error);
+    }
+  };
+  fetchAvailableSlots();
+}, [selectedDoctor, selectedDate]);
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
@@ -37,12 +129,33 @@ const AppointmentPage = () => {
     }
 
     setIsSubmitting(true);
-
+    const [startTime] = selectedTime.split("-");
+      
+      const payload = {
+        doctorUserId: selectedDoctor, // Must be a valid Long
+        startTime: startTime.trim(),    // Must be in HH:mm format
+        appointmentDate: selectedDate,  // Format: YYYY-MM-DD
+        appointmentType: appointmentType === "in-person" ? "IN_PERSON" : "TELEMEDICINE", // e.g., "ONLINE" or "OFFLINE"
+        symptoms: symptoms              // A non-empty string
+      };
+    
+      try {
+        const response = await axios.post('http://localhost:6969/api/hms/appointment/take', payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        alert("Appointment booked successfully!");
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error booking appointment:", error.response?.data || error.message);
+        alert("Failed to book appointment.");
+      }
     // Mock submission
-    setTimeout(() => {
+   
       setIsSubmitting(false);
       navigate("/patient/dashboard");
-    }, 2000);
+   
   };
 
   const timeSlots = [
@@ -134,19 +247,17 @@ const AppointmentPage = () => {
                         <select
                           id="department"
                           value={selectedDepartment}
-                          onChange={(e) =>
-                            setSelectedDepartment(e.target.value)
-                          }
+                          onChange={handleDeptChange}
+                         
                           required
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         >
                           <option value="">Select Department</option>
-                          <option value="cardiology">Cardiology</option>
-                          <option value="dermatology">Dermatology</option>
-                          <option value="neurology">Neurology</option>
-                          <option value="orthopedics">Orthopedics</option>
-                          <option value="pediatrics">Pediatrics</option>
-                          <option value="psychiatry">Psychiatry</option>
+                          {Array.isArray(departments) &&departments.map((dept, index) => (
+  <option key={dept.id || index} value={dept.deptId}>
+    {dept.deptName}
+  </option>
+  ))}
                         </select>
                       </div>
 
@@ -165,10 +276,11 @@ const AppointmentPage = () => {
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         >
                           <option value="">Select Doctor</option>
-                          <option value="dr-smith">Dr. John Smith</option>
-                          <option value="dr-johnson">Dr. Emily Johnson</option>
-                          <option value="dr-chen">Dr. Michael Chen</option>
-                          <option value="dr-patel">Dr. Anita Patel</option>
+                          {Array.isArray(doctors) &&doctors.map((doc) => (
+    <option key={doc.id} value={doc.userId}>
+      {doc.name}
+    </option>
+  ))}
                         </select>
                       </div>
 
@@ -202,7 +314,7 @@ const AppointmentPage = () => {
                         Available Time Slots
                       </label>
                       <div className="grid grid-cols-4 gap-2">
-                        {timeSlots.map((time, index) => (
+                        {/* {timeSlots.map((time, index) => (
                           <button
                             key={index}
                             type="button"
@@ -216,7 +328,23 @@ const AppointmentPage = () => {
                             <Clock size={12} className="mr-1" />
                             {time}
                           </button>
-                        ))}
+                        ))} */}
+                        {Array.isArray(availableSlots) && availableSlots.map((slot, index) => (
+  <button
+    key={index}
+    type="button"
+    className={`py-2 px-3 rounded-md text-sm flex items-center justify-center ${
+      selectedTime === `${slot.startTime}-${slot.endTime}`
+        ? "bg-blue-100 text-blue-700 border border-blue-300"
+        : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+    }`}
+    onClick={() => setSelectedTime(`${slot.startTime}-${slot.endTime}`)}
+  >
+    <Clock size={12} className="mr-1" />
+    {slot.startTime} - {slot.endTime}
+  </button>
+))}
+
                       </div>
                     </div>
 

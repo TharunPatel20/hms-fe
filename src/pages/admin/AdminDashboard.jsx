@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../../components/layout/Navbar";
 import {
   CheckCircle,
   X,
@@ -12,7 +11,7 @@ import {
 import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
-import AdminNavbar from "./AdminNavbar";
+
 
 // Mock data for demonstration
 const pendingDoctorApprovals = [
@@ -47,7 +46,7 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       {" "}
-      <AdminNavbar/>
+      
       {/* Dashboard Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="bg-blue-50 border-none">

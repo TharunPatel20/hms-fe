@@ -27,6 +27,11 @@ import PatientDashboard from "./pages/patient/PatientDashboard";
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import { useAuthStore } from "./store/authStore";
+import Doctors from "./pages/admin/Doctors";
+import DoctorApprovals from "./pages/admin/DoctorApprovals";
+import Departments from "./pages/admin/Departments";
+import Rooms from "./pages/admin/Rooms";
+import Patients from "./pages/admin/Patients";
 
 function App() {
   const {role} = useAuthStore();
@@ -87,11 +92,11 @@ function App() {
         >
           <Route element={<DashboardLayout />}>
             <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="doctor-approvals" element={<div>Doctor Approvals</div>} />
-            <Route path="departments" element={<div>Departments</div>} />
-            <Route path="rooms" element={<div>Rooms</div>} />
-            <Route path="doctors" element={<div>Doctors</div>} />
-            <Route path="patients" element={<div>Patients</div>} />
+            <Route path="doctor-approvals" element={<DoctorApprovals/>} />
+            <Route path="departments" element={<Departments/>} />
+            <Route path="rooms" element={<Rooms/>} />
+            <Route path="doctors" element={<Doctors/>} />
+            <Route path="patients" element={<Patients/>} />
             <Route path="statistics" element={<div>Statistics</div>} />
             <Route index element={<Navigate to="dashboard" replace />} />
           </Route>

@@ -66,11 +66,7 @@ const DoctorDashboard = () => {
 
   return (
     <>
-      
       <div className="space-y-6">
-        
-       <DoctorNavbar/>
-
         {/* Dashboard Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card title="Today's Appointments" className="bg-blue-50 border-none">

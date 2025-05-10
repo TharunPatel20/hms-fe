@@ -4,11 +4,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export const useAuthStore = create(
   persist(
     (set, get) => ({
-      user: '',
-      role: '',
-      token: '',
+      user: "",
+      role: "",
+      token: "",
       isAuthenticated: false,
       isLoading: false,
+      isDarkMode: false, // Add darkMode state
 
       login: (role, data) => {
         set({
@@ -20,20 +21,35 @@ export const useAuthStore = create(
         });
       },
 
-      
       logout: () => {
-
         set({
           user: null,
           role: null,
           token: null,
           isAuthenticated: false,
         });
-      }
+      },
+
+      // Action to toggle dark mode
+      toggleDarkMode: () => {
+        set((state) => {
+          const newDarkModeState = !state.isDarkMode;
+          // Apply or remove dark class from document
+          if (newDarkModeState) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+
+          return {
+            isDarkMode: newDarkModeState,
+          };
+        });
+      },
     }),
     {
-      name: "ui-storage", // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      name: "ui-storage", // Name of the item in the storage
+      storage: createJSONStorage(() => sessionStorage), // Storage is sessionStorage
     }
   )
-)
+);

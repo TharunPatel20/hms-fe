@@ -21,9 +21,9 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className=" bg-white dark:bg-black">
       <Navbar />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen ">
         {/* Hero Section */}
         <div className="relative min-h-screen flex flex-col">
           <div className="relative bg-gradient-to-r from-blue-600 to-blue-900 h-[80vh] flex items-center">
@@ -36,8 +36,8 @@ const HomePage = () => {
             ></div>
 
             <div className="container mx-auto px-8 relative mt-6 z-10 flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 text-center md:text-left text-white">
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+              <div className="md:w-1/2 text-center md:text-left text-white dark:text-white">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 ">
                   Modern Healthcare <br />
                   <span className="text-blue-300">At Your Fingertips</span>
                 </h1>
@@ -121,27 +121,28 @@ const HomePage = () => {
         </div>
 
         {/* About Section */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-50  dark:bg-gray-900">
           <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center gap-12">
-              <div className="md:w-1/2">
-                <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            <div className="flex flex-col md:flex-row items-center gap-12  m-auto ">
+              <div className="">
+                <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
                   About Our Hospital
                 </h2>
-                <p className="text-gray-600 mb-6">
+                <div className="flex justify-between">
+                <p className="text-gray-600 mb-6 dark:text-white md:w-1/2 pt-8 " >
                   MediCare is a state-of-the-art hospital management system
                   designed to streamline healthcare services and improve patient
                   experience. Our platform connects patients with top medical
                   professionals and provides easy access to healthcare services.
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-4 dark:text-white">
                   <div className="flex items-start">
                     <CheckCircle
                       size={20}
                       className="text-green-500 mr-3 mt-1 flex-shrink-0"
                     />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-white">
                       Advanced technology for seamless healthcare management
                     </p>
                   </div>
@@ -150,7 +151,7 @@ const HomePage = () => {
                       size={20}
                       className="text-green-500 mr-3 mt-1 flex-shrink-0"
                     />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-white">
                       Highly qualified medical professionals from various
                       specializations
                     </p>
@@ -160,7 +161,7 @@ const HomePage = () => {
                       size={20}
                       className="text-green-500 mr-3 mt-1 flex-shrink-0"
                     />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-white">
                       24/7 patient support and emergency services
                     </p>
                   </div>
@@ -169,9 +170,10 @@ const HomePage = () => {
                       size={20}
                       className="text-green-500 mr-3 mt-1 flex-shrink-0"
                     />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 dark:text-white">
                       Modern facilities with the latest medical equipment
                     </p>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -180,10 +182,10 @@ const HomePage = () => {
         </section>
 
         {/* Statistics Section */}
-        <section className="py-16 bg-blue-600 text-white">
+        <section className="py-16 bg-blue-600 text-white  ">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold">Trusted by Thousands</h2>
+              <h2 className="text-3xl font-bold dark:text-white">Trusted by Thousands</h2>
               <p className="text-xl opacity-80 mt-2">Our impact in numbers</p>
             </div>
 
@@ -224,11 +226,11 @@ const HomePage = () => {
         </section>
 
         {/* Services Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 dark:bg-gray-900">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-800">Our Services</h2>
-              <p className="text-xl text-gray-600 mt-2">
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-white">Our Services</h2>
+              <p className="text-xl text-gray-600 mt-2  dark:text-white">
                 Comprehensive healthcare solutions for all your needs
               </p>
             </div>
@@ -289,12 +291,12 @@ const HomePage = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gray-100">
+        <section className="py-20 bg-gray-100  dark:bg-black dark:border-rounded-lg dark:border-white">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 dark:text-white">
               Ready to experience better healthcare?
             </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto dark:text-white">
               Join thousands of patients who have transformed their healthcare
               experience with MediCare.
             </p>
@@ -390,7 +392,7 @@ const HomePage = () => {
           onClose={() => setIsLoginModalOpen(false)}
         />
       </div>
-    </>
+    </div>
   );
 };
 

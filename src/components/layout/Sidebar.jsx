@@ -1,5 +1,5 @@
-import React from "react"
-import { Link, useLocation } from "react-router-dom"
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   Home,
   Calendar,
@@ -16,12 +16,16 @@ import {
   X,
   Menu,
   ArrowLeft,
-  User
-} from "lucide-react"
+  User,
+} from "lucide-react";
 
+const Sidebar = ({ role = "PATIENT", isMobileOpen, setIsMobileOpen }) => {
+  const location = useLocation();
 
-const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
-  const location = useLocation()
+  if (!["DOCTOR", "PATIENT", "ADMIN"].includes(role)) {
+    console.error(`Invalid role: ${role}`);
+    return null;
+  }
 
   // Role-based sidebar links
   const sidebarLinks = {
@@ -34,7 +38,6 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "Appointment Calendar", path: "/doctor/calendar", icon: <Calendar size={20} /> },
       { name: "Messages", path: "/doctor/messages", icon: <MessageSquare size={20} /> },
       { name: "My-Profile", path: "/doctor/profile", icon: <User size={20} /> },
-
     ],
     PATIENT: [
       { name: "Dashboard", path: "/patient/dashboard", icon: <Home size={20} /> },
@@ -56,12 +59,12 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
       { name: "View Patients", path: "/admin/patients", icon: <Users size={20} /> },
       { name: "Statistics", path: "/admin/statistics", icon: <Activity size={20} /> },
     ],
-  }
+  };
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <>
+    <div className="dark:bg-black">
       {/* Mobile sidebar backdrop */}
       {isMobileOpen && (
         <div
@@ -82,15 +85,11 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`bg-white h-screen md:block fixed md:sticky top-0 left-0 w-64 border-r border-gray-200 shadow-sm transition-transform duration-300 ease-in-out transform z-30 ${
+        className={`bg-white h-screen md:block fixed md:sticky top-0 left-0 w-64 border-r border-gray-200 shadow-md transition-transform duration-300 ease-in-out transform z-30 ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <div className="h-16 flex items-center justify-between px-4 border-b">
-          <h2 className="text-lg font-bold flex items-center">
-            <Stethoscope className="mr-2" size={20} />
-            MediCare
-          </h2>
+        <div className="h-1 flex items-center justify-between px-4 border-b shadow-sm">
           <button
             className="md:hidden text-gray-500 hover:text-gray-700"
             onClick={() => setIsMobileOpen(false)}
@@ -101,9 +100,7 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
 
         <nav className="mt-4 px-2 overflow-y-auto h-[calc(100vh-4rem)]">
           <ul className="space-y-1">
-          
             {sidebarLinks[role]?.map((item) => (
-              
               <li key={item.path}>
                 <Link
                   to={item.path}
@@ -122,8 +119,17 @@ const Sidebar = ({ role, isMobileOpen, setIsMobileOpen }) => {
           </ul>
         </nav>
       </aside>
-    </>
-  )
-}
 
-export default Sidebar
+      {/* Main content container */}
+      <main
+        className={`${
+          isMobileOpen ? "ml-64" : "ml-0" // Adjusts main content margin based on sidebar state
+        } transition-all duration-300 ease-in-out`}
+      >
+        {/* Add your main content here */}
+      </main>
+    </div>
+  );
+};
+
+export default Sidebar;

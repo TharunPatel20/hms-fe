@@ -42,8 +42,8 @@ export default function Rooms() {
 
   return (
     <div className="space-y-6">
-      <div className="p-8 bg-gray-100 min-h-screen">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+      <div className="p-8 bg-gray-100 dark:bg-black min-h-screen">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           Available rooms
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

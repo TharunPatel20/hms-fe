@@ -27,9 +27,9 @@ export default function Department({ department }) {
               <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
             </svg>
           </div>
-          <h3 className="font-medium text-gray-900">{department.deptName}</h3>
-          <p className="text-gray-500 text-sm mt-1">{department.doctorCount || department.doctors?.length || 0} doctors</p>
-          <p className="text-gray-500 text-sm">{totalRooms} rooms</p>
+          <h3 className="font-medium text-gray-900  dark:text-white">{department.deptName}</h3>
+          <p className=" dark:text-white text-gray-500 text-sm mt-1">{department.doctorCount || department.doctors?.length || 0} doctors</p>
+          <p className=" dark:text-white text-gray-500 text-sm">{totalRooms} rooms</p>
         </div>
         <div className="flex flex-col gap-2">
           <button className="text-blue-600 hover:text-blue-800 text-sm">Edit</button>
@@ -39,7 +39,7 @@ export default function Department({ department }) {
 
       <div className="mt-4 pt-4 border-t border-gray-100">
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Room Availability</span>
+          <span className="text-gray-600  dark:text-white">Room Availability</span>
           <span className="font-medium text-green-600">{availabilityPercent}%</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">

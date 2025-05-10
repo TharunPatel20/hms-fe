@@ -13,13 +13,10 @@ import {
   DoorClosed,
   Activity,
   CheckSquare,
-  X,
-  Menu,
-  ArrowLeft,
   User,
 } from "lucide-react";
 
-const Sidebar = ({ role = "PATIENT", isMobileOpen, setIsMobileOpen }) => {
+const Sidebar = ({ role = "PATIENT" }) => {
   const location = useLocation();
 
   if (!["DOCTOR", "PATIENT", "ADMIN"].includes(role)) {
@@ -27,7 +24,6 @@ const Sidebar = ({ role = "PATIENT", isMobileOpen, setIsMobileOpen }) => {
     return null;
   }
 
-  // Role-based sidebar links
   const sidebarLinks = {
     DOCTOR: [
       { name: "Dashboard", path: "/doctor/dashboard", icon: <Home size={20} /> },
@@ -64,71 +60,26 @@ const Sidebar = ({ role = "PATIENT", isMobileOpen, setIsMobileOpen }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="dark:bg-black">
-      {/* Mobile sidebar backdrop */}
-      {isMobileOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-gray-600 bg-opacity-75 z-20"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
-
-      {/* Mobile sidebar toggle button */}
-      <div className="md:hidden fixed bottom-4 right-4 z-30">
-        <button
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-transform duration-200 ease-in-out transform hover:scale-105"
-        >
-          {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Sidebar */}
-      <aside
-        className={`bg-white h-screen md:block fixed md:sticky top-0 left-0 w-64 border-r border-gray-200 shadow-md transition-transform duration-300 ease-in-out transform z-30 ${
-          isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
-      >
-        <div className="h-1 flex items-center justify-between px-4 border-b shadow-sm">
-          <button
-            className="md:hidden text-gray-500 hover:text-gray-700"
-            onClick={() => setIsMobileOpen(false)}
+    <aside className="w-64 h-full bg-white dark:bg-black border-r border-gray-200 shadow-lg px-4 py-6">
+      <h2 className="text-lg font-semibold mb-4 dark:text-white">Menu</h2>
+      <nav className="space-y-1">
+        {sidebarLinks[role]?.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`flex items-center px-3 py-2 rounded-md transition dark:text-dark ${
+              isActive(item.path)
+                ? "bg-blue-100 text-blue-900  "
+                : "hover:bg-blue-100 dark:text-dark dark:hover:bg-gray-800"
+            }`}
           >
-            <ArrowLeft size={20} />
-          </button>
-        </div>
-
-        <nav className="mt-4 px-2 overflow-y-auto h-[calc(100vh-4rem)]">
-          <ul className="space-y-1">
-            {sidebarLinks[role]?.map((item) => (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center px-3 py-2 rounded-md transition duration-150 ease-in-out ${
-                    isActive(item.path)
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                  onClick={() => setIsMobileOpen(false)}
-                >
-                  <span className="mr-3">{item.icon}</span>
-                  <span>{item.name}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main content container */}
-      <main
-        className={`${
-          isMobileOpen ? "ml-64" : "ml-0" // Adjusts main content margin based on sidebar state
-        } transition-all duration-300 ease-in-out`}
-      >
-        {/* Add your main content here */}
-      </main>
-    </div>
+            <span className="mr-3">{item.icon}</span>
+            {item.name}
+          </Link>
+        ))}
+      </nav>
+      
+    </aside>
   );
 };
 

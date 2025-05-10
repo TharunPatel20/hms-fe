@@ -35,17 +35,17 @@ export default function Departments() {
 
   if (departmentsLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="flex items-center justify-center">
         <p className="text-lg font-semibold text-gray-600 animate-pulse">Loading departments...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className=" bg-gray-50">
       
-      <div className="p-6 sm:p-10">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+      <div className="p-6 sm:p-10 dark:bg-black">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8  dark:text-white">
           Available Departments
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

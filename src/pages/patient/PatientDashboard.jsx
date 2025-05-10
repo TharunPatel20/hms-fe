@@ -55,9 +55,7 @@ const PatientDashboard = () => {
   const patient = role
 
   return (
-    <div className="space-y-6">
-      <PatientNavbar/>
-
+    <div className="space-y-6 dark:text-white dark:bg-black ">
       {/* Dashboard Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="bg-blue-50 border-none">

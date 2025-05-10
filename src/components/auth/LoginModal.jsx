@@ -40,13 +40,13 @@ const LoginModal = ({ isOpen, onClose }) => {
           <X size={20} />
         </button>
 
-        <div className="p-6">
+        <div className="p-6 dark:bg-black">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Login to MediCare
           </h2>
 
           {!selectedRole ? (
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               <p className="text-gray-600 text-center mb-6">
                 Please select your role to continue
               </p>
@@ -59,7 +59,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <div className="bg-blue-100 p-2 rounded-full">
                     <UserCheck size={24} className="text-blue-600" />
                   </div>
-                  <span className="ml-3 font-medium">Login as Doctor</span>
+                  <span className="ml-3 font-medium  dark:text-white">Login as Doctor</span>
                 </div>
                 <span className="text-blue-600">→</span>
               </button>
@@ -72,7 +72,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <div className="bg-green-100 p-2 rounded-full">
                     <User size={24} className="text-green-600" />
                   </div>
-                  <span className="ml-3 font-medium">Login as Patient</span>
+                  <span className="ml-3 font-medium dark:text-white">Login as Patient</span>
                 </div>
                 <span className="text-blue-600">→</span>
               </button>
@@ -85,7 +85,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <div className="bg-purple-100 p-2 rounded-full">
                     <Users size={24} className="text-purple-600" />
                   </div>
-                  <span className="ml-3 font-medium">Login as Admin</span>
+                  <span className="ml-3 font-medium dark:text-white">Login as Admin</span>
                 </div>
                 <span className="text-blue-600">→</span>
               </button>

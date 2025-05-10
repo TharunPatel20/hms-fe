@@ -17,12 +17,12 @@ const AdminNavbar = () => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">Admin</h1>
-        <p className="text-gray-600">Welcome back!</p>
+      <div className="ml-8">
+        <h1 className="text-2xl font-bold text-gray-800  dark:text-white">Admin</h1>
+        <p className="text-gray-600  dark:text-white">Welcome back!</p>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 ">
         <Button variant="primary">System Settings</Button>
         <div className="relative">
           <button
@@ -34,7 +34,7 @@ const AdminNavbar = () => {
           </button>
           
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow text-sm z-10">
+            <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-black rounded-md shadow text-sm z-10 ">
               <Link
                 to="/admin/dashboard"
                 className="block px-4 py-2 hover:bg-gray-100"

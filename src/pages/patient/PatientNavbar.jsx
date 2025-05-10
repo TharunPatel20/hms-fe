@@ -16,11 +16,11 @@ const PatientNavbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center bg-white border-b px-6 py-4 shadow-sm">
+    <div className="flex justify-between items-center dark:bg-black bg-white border-b px-6 py-4 shadow-sm ">
       {/* Left Section */}
       <div className="flex flex-col">
-        <h1 className="text-xl font-semibold text-gray-800">{role}</h1>
-        <p className="text-sm text-gray-500">Welcome back, User!</p>
+        <h1 className="text-xl font-semibold text-gray-800 dark:text-white">{role}</h1>
+        <p className="text-sm text-gray-500 dark:text-white">Welcome back, User!</p>
       </div>
 
       {/* Right Section */}

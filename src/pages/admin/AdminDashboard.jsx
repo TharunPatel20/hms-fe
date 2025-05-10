@@ -12,7 +12,6 @@ import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
 
-
 // Mock data for demonstration
 const pendingDoctorApprovals = [
   {
@@ -44,14 +43,13 @@ const AdminDashboard = () => {
   const { role } = useAuthStore();
   const admin = role;
   return (
-    <div className="space-y-6">
+    <div className=" ">
       {" "}
-      
       {/* Dashboard Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
         <Card className="bg-blue-50 border-none">
           <div className="flex items-start">
-            <div className="p-3 bg-blue-100 rounded-full">
+            <div className=" bg-blue-100 rounded-full">
               <Users size={24} className="text-blue-600" />
             </div>
             <div className="ml-4">

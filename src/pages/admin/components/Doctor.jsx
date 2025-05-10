@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import { MoreVertical } from "lucide-react"; // Optional: replace with your preferred icon set
+import { MoreVertical } from "lucide-react";
 
 const Doctor = ({ doctor }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow bg-white relative">
-      {/* 3 Dots Icon */}
-      <div className="absolute top-4 right-4 cursor-pointer" onClick={() => setShowDetails(!showDetails)}>
+      {/* Options icon */}
+      <div
+        className="absolute top-4 right-4 cursor-pointer"
+        onClick={() => setShowDetails(!showDetails)}
+      >
         <MoreVertical className="w-5 h-5 text-gray-500 hover:text-gray-800" />
       </div>
 
-      {/* Top: Avatar & Basic Info */}
+      {/* Header: image + name/specialization */}
       <div className="flex items-center mb-4">
         <img
           className="h-12 w-12 rounded-full object-cover mr-4"
-          src={doctor.image || "https://randomuser.me/api/portraits/men/32.jpg"}
-          alt={doctor.name}
+          src={
+            doctor.image ||
+            `https://randomuser.me/api/portraits/${doctor.gender === "FEMALE" ? "women" : "men"}/${doctor.userId % 90}.jpg`
+          }
+          alt={`Dr. ${doctor.name}`}
         />
         <div>
           <h3 className="font-medium text-gray-900">Dr. {doctor.name}</h3>
@@ -46,12 +52,18 @@ const Doctor = ({ doctor }) => {
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mb-4">
-        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">{doctor.specialization}</span>
-        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">{doctor.degree}</span>
-        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">{doctor.designation.replace("_", " ")}</span>
+        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full capitalize">
+          {doctor.specialization}
+        </span>
+        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full capitalize">
+          {doctor.degree}
+        </span>
+        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full capitalize">
+          {doctor.designation.replace("_", " ")}
+        </span>
       </div>
 
-      {/* Collapsible Details */}
+      {/* Extra Details (toggleable) */}
       {showDetails && (
         <div className="text-sm text-gray-700 space-y-2 mb-4">
           <div className="flex justify-between">
@@ -64,7 +76,9 @@ const Doctor = ({ doctor }) => {
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Timing:</span>
-            <span>{doctor.startTime} - {doctor.endTime}</span>
+            <span>
+              {doctor.startTime} - {doctor.endTime}
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Room:</span>
@@ -76,7 +90,9 @@ const Doctor = ({ doctor }) => {
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Available:</span>
-            <span className={doctor.available ? "text-green-600" : "text-red-500"}>
+            <span
+              className={doctor.available ? "text-green-600" : "text-red-500"}
+            >
               {doctor.available ? "Yes" : "No"}
             </span>
           </div>

@@ -33,6 +33,8 @@ import Departments from "./pages/admin/Departments";
 import Rooms from "./pages/admin/Rooms";
 import Patients from "./pages/admin/Patients";
 import Upcoming from "./pages/patient/Upcoming";
+import AppointmentForm from "./components/forms/AppointmentForm";
+import DoctorProfileCard from "./pages/doctor/DoctorProfileCard";
 
 function App() {
   const { role } = useAuthStore();
@@ -79,7 +81,7 @@ function App() {
               />
               <Route path="calendar" element={<div>Calendar</div>} />
               <Route path="messages" element={<div>Messages</div>} />
-              <Route path="profile" element={<div>Profile</div>} />
+              <Route path="profile" element={<DoctorProfileCard/>} />
               <Route path="logout" element={<HomePage />} />
               <Route index element={<Navigate to="dashboard" replace />} />
             </Route>
@@ -94,9 +96,13 @@ function App() {
               <Route path="dashboard" element={<PatientDashboard />} />
               <Route
                 path="book-appointment"
-                element={<div>Book Appointment</div>}
+                element={
+                  <div>
+                    <AppointmentForm />
+                  </div>
+                }
               />
-              <Route path="appointments" element={<Upcoming/>} />
+              <Route path="appointments" element={<Upcoming />} />
               <Route
                 path="past-appointments"
                 element={<div>Past Appointments</div>}

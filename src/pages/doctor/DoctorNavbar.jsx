@@ -42,12 +42,12 @@ const DoctorNavbar = () => {
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-md text-sm z-10">
               <Link
-                to="/doctor/dashboard"
+                to="/doctor/profile"
                 className="block px-4 py-2 hover:bg-gray-100"
                 onClick={() => setProfileOpen(false)}
               >
                 <User size={16} className="inline mr-2" />
-                Dashboard
+                Profile
               </Link>
               <button
                 onClick={handleLogout}

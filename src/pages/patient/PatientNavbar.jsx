@@ -25,7 +25,7 @@ const PatientNavbar = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-6">
-        <Button variant="primary" onClick={() => {}}>
+        <Button variant="primary" onClick={() => {navigate("/patient/book-appointment")}}>
           Book Appointment
         </Button>
         
@@ -42,12 +42,12 @@ const PatientNavbar = () => {
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-md text-sm z-10">
               <Link
-                to="/patient/dashboard"
+                to="/patient/profile"
                 className="block px-4 py-2 hover:bg-gray-100"
                 onClick={() => setProfileOpen(false)}
               >
                 <User size={16} className="inline mr-2" />
-                Dashboard
+                Profile
               </Link>
               <button
                 onClick={handleLogout}

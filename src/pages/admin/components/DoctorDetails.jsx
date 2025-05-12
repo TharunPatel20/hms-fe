@@ -30,7 +30,7 @@ const DoctorDetails = ({ doctors, onApprove, onReject }) => {
         >
           <td className="px-4 py-2 whitespace-nowrap">
             <h2
-              className="w-10 h-10 rounded-full object-cover text-lg"
+              className="w-10 h-10 rounded-full object-cover text-lg dark:text-black"
             >  {doc.userId}</h2>
           </td>
           <td className="px-4 py-2 whitespace-nowrap">
@@ -50,7 +50,7 @@ const DoctorDetails = ({ doctors, onApprove, onReject }) => {
           <td className="px-4 py-2 text-sm text-gray-700">
             {doc.startTime} - {doc.endTime}
           </td>
-          <td className="px-4 py-2 text-sm font-semibold">
+          <td className="px-4 py-2 text-sm font-semibold  dark:text-black">
             {doc.approvalStatus}
           </td>
           <td className="px-4 py-2 text-sm">

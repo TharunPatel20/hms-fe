@@ -12,6 +12,8 @@ import Card from "../../components/common/Card"
 import Button from "../../components/common/Button"
 import { useAuthStore } from "../../store/authStore"
 import PatientNavbar from "./PatientNavbar"
+import FindDoctor from "./FindDoctor"
+import Upcoming from "./Upcoming"
 
 // Mock data for demonstration
 const upcomingAppointments = [
@@ -57,7 +59,7 @@ const PatientDashboard = () => {
   return (
     <div className="space-y-6 dark:text-white dark:bg-black ">
       {/* Dashboard Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="bg-blue-50 border-none">
           <div className="flex items-start">
             <div className="p-3 bg-blue-100 rounded-full">
@@ -111,10 +113,10 @@ const PatientDashboard = () => {
             </div>
           </div>
         </Card>
-      </div>
+      </div> */}
 
       {/* Find a Doctor */}
-      <Card title="Find a Doctor">
+      {/* <Card title="Find a Doctor">
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
@@ -277,72 +279,13 @@ const PatientDashboard = () => {
             View All Doctors
           </Button>
         </div>
-      </Card>
+      </Card> */}
+      <FindDoctor/>
 
       {/* Upcoming Appointments */}
-      <Card title="Upcoming Appointments">
-        <div className="space-y-4">
-          {upcomingAppointments.map(appointment => (
-            <div
-              key={appointment.id}
-              className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
-            >
-              <div className="flex flex-col md:flex-row justify-between">
-                <div className="flex items-start">
-                  <div className="p-2 bg-blue-100 rounded-full mr-4">
-                    <Calendar size={20} className="text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-900">
-                      {appointment.doctorName}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      {appointment.specialization}
-                    </p>
-                    <div className="flex items-center mt-2 text-gray-500 text-sm">
-                      <Calendar size={14} className="mr-1" />
-                      <span className="mr-3">
-                        {new Date(appointment.date).toLocaleDateString()}
-                      </span>
-                      <Clock size={14} className="mr-1" />
-                      <span>{appointment.time}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 md:mt-0 flex items-center space-x-3">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      appointment.type === "online"
-                        ? "bg-blue-100 text-blue-800"
-                        : "bg-green-100 text-green-800"
-                    }`}
-                  >
-                    {appointment.type === "online" ? "Online" : "In-Person"}
-                  </span>
-                  <Button variant="outline" size="sm">
-                    Reschedule
-                  </Button>
-                  {appointment.type === "online" && (
-                    <Button variant="primary" size="sm">
-                      Join Call
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          <div className="mt-4 flex justify-end">
-            <Button variant="outline" size="sm">
-              View All Appointments
-            </Button>
-          </div>
-        </div>
-      </Card>
-
+     <Upcoming/>
       {/* Recent Prescriptions */}
-      <Card title="Recent Prescriptions">
+      {/* <Card title="Recent Prescriptions">
         <div className="space-y-4">
           {recentPrescriptions.map(prescription => (
             <div
@@ -384,7 +327,7 @@ const PatientDashboard = () => {
             </Button>
           </div>
         </div>
-      </Card>
+      </Card> */}
     </div>
   )
 }

@@ -32,6 +32,7 @@ import DoctorApprovals from "./pages/admin/DoctorApprovals";
 import Departments from "./pages/admin/Departments";
 import Rooms from "./pages/admin/Rooms";
 import Patients from "./pages/admin/Patients";
+import Upcoming from "./pages/patient/Upcoming";
 
 function App() {
   const { role } = useAuthStore();
@@ -95,7 +96,7 @@ function App() {
                 path="book-appointment"
                 element={<div>Book Appointment</div>}
               />
-              <Route path="appointments" element={<div>Appointments</div>} />
+              <Route path="appointments" element={<Upcoming/>} />
               <Route
                 path="past-appointments"
                 element={<div>Past Appointments</div>}

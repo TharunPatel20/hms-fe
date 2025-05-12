@@ -35,6 +35,7 @@ import Patients from "./pages/admin/Patients";
 import Upcoming from "./pages/patient/Upcoming";
 import AppointmentForm from "./components/forms/AppointmentForm";
 import DoctorProfileCard from "./pages/doctor/DoctorProfileCard";
+import PatientProfile from "./pages/patient/PatientProfile";
 
 function App() {
   const { role } = useAuthStore();
@@ -114,7 +115,7 @@ function App() {
               <Route path="billing" element={<div>Billing</div>} />
               <Route path="prescriptions" element={<div>Prescriptions</div>} />
               <Route path="messages" element={<div>Messages</div>} />
-              <Route path="profile" element={<div>Profile</div>} />
+              <Route path="profile" element={<PatientProfile/>} />
               <Route path="logout" element={<HomePage />} />
               <Route index element={<Navigate to="dashboard" replace />} />
             </Route>

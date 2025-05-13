@@ -4,6 +4,8 @@ import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
 import DoctorNavbar from "./DoctorNavbar";
+import UpcomingAppointments from "./UpcomingAppointments";
+import DashboardOverview from "./DashboardOverview";
 
 // Mock data for demonstration
 const upcomingAppointments = [
@@ -68,7 +70,7 @@ const DoctorDashboard = () => {
     <>
       <div className="space-y-6 dark:bg-black">
         {/* Dashboard Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card title="Today's Appointments" className="bg-blue-50 border-none">
             <div className="flex items-start">
               <div className="p-3 bg-blue-100 rounded-full">
@@ -108,10 +110,10 @@ const DoctorDashboard = () => {
               </div>
             </div>
           </Card>
-        </div>
-
+        </div> */}
+<DashboardOverview/>
         {/* Upcoming Appointments */}
-        <Card title="Upcoming Appointments">
+        {/* <Card title="Upcoming Appointments">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -190,7 +192,9 @@ const DoctorDashboard = () => {
               </Button>
             </div>
           </div>
-        </Card>
+        </Card> */}
+
+        <UpcomingAppointments/>
 
         {/* Recent Patients */}
         <Card title="Recent Patients">

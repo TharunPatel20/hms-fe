@@ -14,6 +14,7 @@ const Navbar = () => {
     if (role === "ADMIN") return <AdminNavbar />;
     if (role === "DOCTOR") return <DoctorNavbar />;
     if (role === "PATIENT") return <PatientNavbar />;
+    else return <PublicNavbar />;
   };
 
   return (

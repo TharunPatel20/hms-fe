@@ -34,11 +34,20 @@ export default function AppointmentForm({ onLoginModalOpen }) {
   // Fetch doctors by department
   useEffect(() => {
     if (!selectedDepartment) return;
-    axios
-      .get(`http://localhost:6969/api/hms/doctor/department/${selectedDepartment}`)
-      .then((res) => setDoctors(res.data.data || []))
-      .catch(() => setErrorMessage("Failed to fetch doctors."));
+  
+    const fetchDoctors = async () => {
+      try {
+        const res = await axios.get(`http://localhost:6969/api/hms/doctor/department/${selectedDepartment}`);
+        console.log(res);
+        setDoctors(res.data.data || []);
+      } catch (err) {
+        setErrorMessage("Failed to fetch doctors.");
+      }
+    };
+  
+    fetchDoctors();
   }, [selectedDepartment]);
+  
 
   // Fetch time slots
   useEffect(() => {

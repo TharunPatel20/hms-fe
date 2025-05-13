@@ -44,7 +44,7 @@ const AdminNavbar = () => {
               </Link> */}
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 hover:bg-gray-100  dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <LogOut size={16} className="inline mr-2" /> Sign out
               </button>

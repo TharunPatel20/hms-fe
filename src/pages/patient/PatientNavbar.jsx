@@ -40,18 +40,18 @@ const PatientNavbar = () => {
           </button>
 
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-md text-sm z-10">
+            <div className="absolute right-0 mt-2 w-44 bg-white  dark:bg-black dark:text-white dark:hover:  rounded-md shadow-md text-sm z-10">
               <Link
                 to="/patient/profile"
-                className="block px-4 py-2 hover:bg-gray-100"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                 onClick={() => setProfileOpen(false)}
               >
-                <User size={16} className="inline mr-2" />
+                <User size={16} className="inline mr-2 " />
                 Profile
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 hover:bg-gray-100  dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <LogOut size={16} className="inline mr-2" />
                 Sign out

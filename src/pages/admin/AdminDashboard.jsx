@@ -11,6 +11,7 @@ import {
 import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { useAuthStore } from "../../store/authStore";
+import AdminDashboardOverview from "./components/AdminDashboardOverview";
 
 // Mock data for demonstration
 const pendingDoctorApprovals = [
@@ -46,7 +47,7 @@ const AdminDashboard = () => {
     <div className=" ">
       {" "}
       {/* Dashboard Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
+      {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
         <Card className="bg-blue-50 border-none">
           <div className="flex items-start">
             <div className=" bg-blue-100 rounded-full">
@@ -104,7 +105,8 @@ const AdminDashboard = () => {
             </div>
           </div>
         </Card>
-      </div>
+      </div> */}
+      <AdminDashboardOverview />
       {/* Hospital Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card title="Weekly Appointments">

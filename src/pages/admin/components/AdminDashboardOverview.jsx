@@ -1,40 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import { Users, Building2, DoorClosed } from "lucide-react";
 import Card from "../../../components/common/Card";
-import { useAuthStore } from "../../../store/authStore";
 
 
-export default function AdminDashboardOverview() {
-  const { token } = useAuthStore();
 
-  const [dashboardData, setDashboardData] = useState({
-    patientCount: 0,
-    totalDonor: 0,
-    totalDoctor: 0,
-    totalDepartment: 0,
-  });
-
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchDashboardInfo = async () => {
-      try {
-        const res = await axios.get("http://localhost:6969/api/hms/admin/dashboard", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setDashboardData(res.data.data);
-      } catch (err) {
-        console.error("Failed to fetch admin dashboard data", err);
-        setError("Failed to load dashboard data.");
-      }
-    };
-
-    fetchDashboardInfo();
-  }, [token]);
-
+export default function AdminDashboardOverview({dashboardData}) {
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
       <Card className="bg-blue-50 border-none">
